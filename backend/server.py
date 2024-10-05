@@ -3,6 +3,7 @@ import requests
 from flask import jsonify
 import light_pollution as lp
 from dotenv import load_dotenv
+import openai
 import os
 app = Flask(__name__)
 # pip install python-dotenv
@@ -39,7 +40,22 @@ def get_weather():
         return jsonify({'error': 'Unable to fetch weather data'}), response.status_code
 
 
-
+@app.route('/chat')
+def chat():
+    input_text = request.args.get('input')
+    openai.api_key = os.environ['OPENAI_API_KEY']
+    try:
+        response = openai.chat.completions.create(
+            model="gpt-4",  # Updated to use GPT-4 model
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": input_text}
+            ]
+        )
+        chatbot_response = response.choices[0].message.content
+    except Exception as e:
+        chatbot_response = f"An error occurred: {str(e)}"
+    return jsonify({'response': chatbot_response})
 
 if __name__ == '__main__':
     app.run()
