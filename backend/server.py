@@ -1,6 +1,7 @@
 from flask import Flask, request
 import requests
 from flask import jsonify
+import json
 import light_pollution as lp
 from dotenv import load_dotenv
 import openai
@@ -11,8 +12,19 @@ app = Flask(__name__)
 load_dotenv(dotenv_path='secrets.env')
 
 #make the route a get request with latitude and longitude as parameters
-@app.route('/light')
-def light():
+
+@app.route('/data')
+def get_data():
+    latitude = float(request.args.get('latitude'))
+    longitude = float(request.args.get('longitude'))
+
+    light_value = light(latitude, longitude)
+    weather_dict = get_weather(latitude, longitude)
+    weather_dict["light"] = light_value
+
+    return jsonify(weather_dict)
+
+def light(latitude, longitude):
     latitude = float(request.args.get('latitude'))
     longitude = float(request.args.get('longitude'))
     print('latitude:', latitude, 'longitude:', longitude)
@@ -22,10 +34,9 @@ def light():
 
 WEATHER_API_KEY = os.environ['WEATHER_API_KEY'] # Replace with your OpenWeatherMap API key
 
-@app.route('/weather', methods=['GET'])
-def get_weather():
-    latitude = float(request.args.get('latitude'))
-    longitude = float(request.args.get('longitude'))
+
+def get_weather(latitude, longitude):
+    
 
     url = f'https://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={WEATHER_API_KEY}&units=metric'
     
@@ -33,11 +44,9 @@ def get_weather():
     response = requests.get(url)
     
     # Check if the request was successful
-    if response.status_code == 200:
-        weather_data = response.json()
-        return jsonify(weather_data)  # Return the JSON response
-    else:
-        return jsonify({'error': 'Unable to fetch weather data'}), response.status_code
+    weather_data = response.json()
+    return weather_data
+    
 
 
 @app.route('/chat')
