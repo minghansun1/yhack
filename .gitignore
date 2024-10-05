@@ -1,2 +1,5 @@
 backend/map.tif
 .DS_Store
+**/__pycache__/
+secrets.env
+venv/
