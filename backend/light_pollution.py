@@ -1,6 +1,7 @@
 import rasterio
 import os
-file_path = 'map.tif'
+dir = os.path.dirname(__file__)
+file_path = os.path.join(dir, 'map.tif')
 
 with rasterio.open(file_path) as src:
     # Get the size of the file in bytes
