@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -171,16 +171,62 @@ const MapPage = () => {
 };
 
 // Main App Component with Router
-const App = () => (
-  <Router>
-    <NavBar /> {/* Render the Navbar */}
-    <Routes>
-      <Route path="/" element={<MapPage />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/resources" element={<Resources />} />
-    </Routes>
-  </Router>
-);
+const App = () => {
+  const [textBoxContent, setTextBoxContent] = useState('');
+  const [chatInput, setChatInput] = useState('');
+
+  const handleChatSubmit = (e: React.FormEvent) => {
+    axios.get('http://127.0.0.1:5000/chat', {
+      params: {
+        input: chatInput
+      }
+    })
+    .then(response => {
+      setTextBoxContent(response.data.response);
+    })
+    .catch(error => {
+      console.error('Error sending chat message:', error);
+      setTextBoxContent('Error sending chat message');
+    });
+    e.preventDefault();
+    // Here you can add the logic to send the chat input to your backend
+    console.log("Chat input submitted:", chatInput);
+    // Clear the input after submission
+    setChatInput('');
+  };
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <Router>
+        <NavBar /> {/* Render the Navbar */}
+        <div style={{ display: 'flex', flex: 1 }}>
+          <div style={{ flex: 1 }}>
+            <Routes>
+              <Route path="/" element={<MapPage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/resources" element={<Resources />} />
+            </Routes>
+          </div>
+          <div style={{ width: '300px', padding: '20px', overflowY: 'auto', borderLeft: '1px solid #ccc' }}>
+            <h2>Stargazer Chatbot</h2>
+            <form onSubmit={handleChatSubmit}>
+              <input
+                type="text"
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                placeholder="Ask a question..."
+                style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
+              />
+              <button type="submit" style={{ width: '100%', padding: '10px' }}>Send</button>
+            </form>
+            <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', marginTop: '20px' }}>
+              {textBoxContent}
+            </pre>
+          </div>
+        </div>
+      </Router>
+    </div>
+  );
+};
 
 export default App;
 
