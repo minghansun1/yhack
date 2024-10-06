@@ -99,6 +99,54 @@ const App = () => {
                     // Access the response data
                     const responseData = response.data;
                     console.log(responseData);
+                    const lightScore = Math.max(0, Math.min(100, (30 - responseData.light) * 10 / 3));
+                    const visibilityScore = Math.max(0, Math.min(100, responseData.visibility / 100));
+                    const cloudCoverScore = Math.max(0, Math.min(100, 100 - responseData.clouds.all));
+                    console.log(lightScore, visibilityScore, cloudCoverScore);
+                    const newContentString = `
+                    <div>
+                      <p>Pin dropped at: ${lat}, ${lng}</p>
+
+                      <!-- Light Bar -->
+                      <p>Light:</p>
+                      <div style="background: linear-gradient(to right, red, green); height: 10px; width: 100%; position: relative;">
+                        <!-- Arrow indicator for light -->
+                        <div style="position: absolute; left: ${lightScore}%; top: -15px;">
+                          ▲
+                        </div>
+                      </div>
+                      <p>${responseData.light}</p>
+
+                      <!-- Visibility Bar -->
+                      <p>Visibility:</p>
+                      <div style="background: linear-gradient(to right, red, green); height: 10px; width: 100%; position: relative;">
+                        <!-- Arrow indicator for visibility -->
+                        <div style="position: absolute; left: ${visibilityScore}%; top: -15px;">
+                          ▲
+                        </div>
+                      </div>
+                      <p>${responseData.visibility} meters</p>
+
+                      <!-- Cloud Cover Bar -->
+                      <p>Cloud Cover:</p>
+                      <div style="background: linear-gradient(to right, red, green); height: 10px; width: 100%; position: relative;">
+                        <!-- Arrow indicator for cloud cover -->
+                        <div style="position: absolute; left: ${cloudCoverScore}%; top: -15px;">
+                          ▲
+                        </div>
+                      </div>
+                      <p>${responseData.clouds.all}%</p>
+
+                      <!-- Composite Score -->
+                      <p>Composite Score: ${lightScore*cloudCoverScore*visibilityScore/(10**6)}</p>
+
+                      <!-- Button -->
+                      <button id="infoWindowButton">Click Me</button>
+                    </div>
+
+                  `;
+                  infoWindow.setContent(newContentString);
+                  infoWindow.open(draggableMarker.map, draggableMarker);
                     // Process the response data here
                 })
                 .catch(error => {
