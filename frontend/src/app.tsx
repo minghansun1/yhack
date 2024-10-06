@@ -88,9 +88,8 @@ const App = () => {
           const button = document.getElementById('infoWindowButton');
           if (button) {
             button.addEventListener('click', () => {
-              alert('Button clicked!');
               console.log(lat, lng);
-              axios.get('http://localhost:5000/data', {
+              axios.get('http://127.0.0.1:5000/data', {
                 params: {
                   latitude: lat,
                   longitude: lng

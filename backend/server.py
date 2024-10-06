@@ -20,6 +20,7 @@ load_dotenv(dotenv_path="secrets.env")
 def get_data():
     latitude = float(request.args.get('latitude'))
     longitude = float(request.args.get('longitude'))
+    print(latitude, longitude)
 
     light_value = light(latitude, longitude)
     weather_dict = get_weather(latitude, longitude)
@@ -28,8 +29,6 @@ def get_data():
     return jsonify(weather_dict)
 
 def light(latitude, longitude):
-    latitude = float(request.args.get('latitude'))
-    longitude = float(request.args.get('longitude'))
     print('latitude:', latitude, 'longitude:', longitude)
     pixel_coordinates = lp.geo_to_pixel(longitude, latitude)
     pixel_value = lp.band_data[pixel_coordinates[1], pixel_coordinates[0]]
@@ -37,10 +36,7 @@ def light(latitude, longitude):
 
 WEATHER_API_KEY = os.environ['WEATHER_API_KEY'] # Replace with your OpenWeatherMap API key
 
-@app.route('/weather', methods=['GET'])
-def get_weather():
-    latitude = float(request.args.get('latitude'))
-    longitude = float(request.args.get('longitude'))
+def get_weather(latitude,longitude):
 
     url = f'https://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={WEATHER_API_KEY}&units=metric'
     
