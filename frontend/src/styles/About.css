@@ -1,0 +1,104 @@
+/* About.css */
+
+/* General page styling */
+.about-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .about-hero {
+    background-image: url('../LightPollution.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 120px 20px;
+    color: white;
+    text-align: center;
+  }
+  
+  .about-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .intro-text {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 30px;
+  }
+  
+  .cta-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .cta-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Features section styling */
+  .about-features {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #f4f4f4;
+  }
+  
+  .about-features h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
+  
+  .features-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .feature-item {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  /* Mission section styling */
+  .about-mission {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #fff;
+  }
+  
+  .about-mission h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Footer styling */
+  .about-footer {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+  }
+  
+  .about-footer a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .about-footer a:hover {
+    text-decoration: underline;
+  }
+  

@@ -1,0 +1,89 @@
+/* Resources.css */
+
+/* General page styling */
+.resources-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Hero section styling */
+  .resources-hero {
+    background-image: url('../LightPollution.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 120px 20px;
+    color: white;
+    text-align: center;
+  }
+  
+  .resources-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .resources-hero .intro-text {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 30px;
+  }
+  
+  .cta-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .cta-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Content section styling */
+  .resources-content {
+    padding: 60px 20px;
+    background-color: #f4f4f4;
+  }
+  
+  .resources-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .resources-content ul {
+    margin-bottom: 40px;
+  }
+  
+  .resources-content li {
+    margin-bottom: 10px;
+  }
+  
+  .resources-content a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .resources-content a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Footer styling */
+  .resources-footer {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+  }
+  
+  .resources-footer a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .resources-footer a:hover {
+    text-decoration: underline;
+  }
+  
