@@ -1,36 +1,55 @@
-# Google Maps Platform 101: React Codelab
+## Inspiration
+This summer, I wanted to see the Perseid meteor shower, so I hiked up a mountain with some friends. When I got to the top, however, the entire sky was covered in clouds (even though the forecast said there was a 50% chance for clouds), and we didn't see anything. Our team thought that it would be really convenient if we had an app to give real-time information about whether an area is suitable for stargazing.
+## What It Does
 
-## Description
-This repo contains the project template and finished code for the [Google Maps Platform 101: React codelab](https://developers.google.com/codelabs/maps-platform/maps-platform-101-react-js).
+**SkyGazer** provides an interactive map that identifies the best locations for stargazing based on three key environmental factors:
+1. **Light Pollution**: Shows how dark the sky is at different locations.
+2. **Visibility**: Displays real-time visibility data to ensure users have a clear view of the sky.
+3. **Cloud Cover**: Provides information about current and forecasted cloud cover, helping users plan their stargazing trips.
 
-![App screenshot](screenshot.png)
+Users can drop a pin anywhere on the map to get real-time data about the conditions at that location. Based on these factors, **SkyGazer** calculates a **composite score** that ranks each spot’s stargazing quality, from "Horrible" to "Pristine."
 
-## Getting Started
-To get started with the codelab, download or fork this repo. A starter template is available in `/starter` and the full solution code is available in `/solution`.
+## How We Built It
 
-To run the starter or solution apps, run the following from their respective directories:
+- **Frontend**: The frontend is built using **React** and **React Router**, with an interactive map powered by **Google Maps API**. Users can drag a marker to any location, triggering a request to get real-time stargazing data.
+  
+- **Backend**: The backend is powered by **Flask**, which handles API requests. It fetches data from external APIs like **OpenWeatherMap** for visibility and cloud cover, as well as custom light pollution data to calculate the best spots for stargazing.
 
-1. `npm i`
-2. `npm start`
+- **APIs**: We integrated multiple APIs, including:
+  - **Google Maps API** for the interactive map and geolocation services.
+  - **OpenWeatherMap API** for weather data, including visibility and cloud cover.
+  - **Custom Light Pollution Data** for accurate assessments of sky brightness.
 
-This will install the needed dependencies and run the app locally in your browser using Webpack Dev Server.
+- **Styling**: We used **CSS** for styling, creating a clean, user-friendly interface for seamless navigation.
 
-## Terms of Service
+## Challenges We Ran Into
 
-This sample uses Google Maps Platform services, and any use of Google Maps Platform is subject to the [Terms of Service](https://cloud.google.com/maps-platform/terms).
+- **API Integration**: Combining data from multiple APIs and aligning them spatially and temporally was tricky. We faced challenges in making sure data was accurate and updated in real-time.
+  
+- **Calculating Composite Scores**: Developing an algorithm to provide a reliable stargazing score based on light pollution, visibility, and cloud cover involved tweaking and testing different weightings to ensure the accuracy of the scores.
 
-This sample is not a Google Maps Platform Core Service. Therefore, the Google Maps Platform Terms of Service (e.g. Technical Support Services, Service Level Agreements, and Deprecation Policy) do not apply to the code in this sample.
+- **UI/UX Design**: Designing a layout that presents complex data in an easy-to-understand and visually appealing manner required multiple iterations.
 
+## Accomplishments That We're Proud Of
 
-## Support
+- Successfully integrating multiple APIs to create an informative and interactive experience.
+- Building a real-time map that provides valuable insights to stargazers in a user-friendly manner.
+- Developing a composite stargazing score that makes it easy for users to find the best places for stargazing at any given moment.
 
-This sample is offered via an open source license. It is not governed by the Google Maps Platform Support [Technical Support Services Guidelines](https://cloud.google.com/maps-platform/terms/tssg), the [SLA](https://cloud.google.com/maps-platform/terms/sla), or the [Deprecation Policy](https://cloud.google.com/maps-platform/terms) (however, any Google Maps Platform services used by the sample remain subject to the Google Maps Platform Terms of Service).
+## What We Learned
 
-If you find a bug, or have a feature request, please [file an issue](https://github.com/googlemaps-samples/codelab-maps-platform-101-react-js/issues) on GitHub. If you would like to get answers to technical questions from other Google Maps Platform developers, ask through one of our [developer community channels](https://developers.google.com/maps/developer-community). If you'd like to contribute, please check the [Contributing guide](CONTRIBUTING.md).
+- **API Management**: We gained a lot of experience managing and working with external APIs, understanding the intricacies of handling real-time data.
+  
+- **Map Integration**: We deepened our knowledge of integrating Google Maps into web applications and enhancing interactivity for users.
 
-You can also discuss this sample on our [Discord server](https://discord.gg/hYsWbmk).
+- **User Experience**: Through feedback and testing, we learned how to present complex data in a simplified way that can be understood by a wide range of users, from amateur stargazers to astronomy enthusiasts.
 
-[codelab]: https://developers.google.com/codelabs/maps-platform/maps-platform-101-react-js
-[file an issue]: https://github.com/googlemaps-samples/codelab-maps-platform-101-react-js/issues
-[pull request]:  https://github.com/googlemaps-samples/codelab-maps-platform-101-react-js/compare
-[code of conduct]: CODE_OF_CONDUCT.md
+## What's Next for SkyGazer
+
+- **Expanded Location Data**: Integrate data from more sources, including satellite data and ground-level observations, to improve the accuracy of stargazing locations.
+  
+- **Mobile App**: Develop a mobile app version of SkyGazer, making it easier for users to plan stargazing trips while on the go.
+
+- **Social Features**: Allow users to save, rate, and share their favorite stargazing spots, building a community of stargazers who can contribute real-time insights and experiences.
+
+- **AR Features**: Incorporate augmented reality (AR) features that help users identify constellations, planets, and celestial events through their device's camera while stargazing.
