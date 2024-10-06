@@ -10,9 +10,9 @@ import os
 app = Flask(__name__)
 # pip install python-dotenv
 
-CORS(app)
-
-load_dotenv(dotenv_path="secrets.env")
+CORS(app) 
+dir = os.path.dirname(__file__)
+load_dotenv(dotenv_path=os.path.join(dir, '../secrets.env'))
 
 #make the route a get request with latitude and longitude as parameters
 
@@ -34,7 +34,7 @@ def light(latitude, longitude):
     pixel_value = lp.band_data[pixel_coordinates[1], pixel_coordinates[0]]
     return str(pixel_value)
 
-WEATHER_API_KEY = os.environ['WEATHER_API_KEY'] # Replace with your OpenWeatherMap API key
+WEATHER_API_KEY = os.environ['WEATHER_API_KEY']
 
 def get_weather(latitude,longitude):
 

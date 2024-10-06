@@ -24,6 +24,8 @@ import { Circle } from './components/circle';
 // Map Component (previously your main App component)
 const MapPage = () => {
   const mapRef = useRef(null); // Reference for the map container
+  const [textBoxContent, setTextBoxContent] = useState('');
+  const [chatInput, setChatInput] = useState('');
 
   useEffect(() => {
     const initMap = async () => {
@@ -153,6 +155,7 @@ const MapPage = () => {
                 })
                 .catch(error => {
                   console.error('Error fetching data:', error);
+                  setTextBoxContent('Error fetching data');
                 });
             });
           }
@@ -163,6 +166,26 @@ const MapPage = () => {
     initMap();
   }, []);
 
+  const handleChatSubmit = (e: React.FormEvent) => {
+    axios.get('http://127.0.0.1:5000/chat', {
+      params: {
+        input: chatInput
+      }
+    })
+    .then(response => {
+      setTextBoxContent(response.data.response);
+    })
+    .catch(error => {
+      console.error('Error sending chat message:', error);
+      setTextBoxContent('Error sending chat message');
+    });
+    e.preventDefault();
+    // Here you can add the logic to send the chat input to your backend
+    console.log("Chat input submitted:", chatInput);
+    // Clear the input after submission
+    setChatInput('');
+  };
+
   return (
     <div ref={mapRef} style={{ height: '100%', width: '100%' }}>
       {/* The map will be rendered inside this div */}
@@ -170,17 +193,6 @@ const MapPage = () => {
   );
 };
 
-// Main App Component with Router
-const App = () => (
-  <Router>
-    <NavBar /> {/* Render the Navbar */}
-    <Routes>
-      <Route path="/" element={<MapPage />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/resources" element={<Resources />} />
-    </Routes>
-  </Router>
-);
 
 export default App;
 
