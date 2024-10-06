@@ -37,6 +37,8 @@ const locations: Poi[] = [
 
 const App = () => {
   const mapRef = useRef(null); // Reference for the map container
+  const [textBoxContent, setTextBoxContent] = useState('');
+  const [chatInput, setChatInput] = useState('');
 
   useEffect(() => {
     // Function to initialize the map
@@ -99,10 +101,12 @@ const App = () => {
                     // Access the response data
                     const responseData = response.data;
                     console.log(responseData);
-                    // Process the response data here
+                    // Update the text box content with the response data
+                    setTextBoxContent(JSON.stringify(responseData, null, 2));
                 })
                 .catch(error => {
                   console.error('Error fetching data:', error);
+                  setTextBoxContent('Error fetching data');
                 });
             });
           }
@@ -114,14 +118,52 @@ const App = () => {
     initMap();
   }, []); // Empty dependency array means this effect runs once after the component mounts
 
+  const handleChatSubmit = (e: React.FormEvent) => {
+    axios.get('http://127.0.0.1:5000/chat', {
+      params: {
+        input: chatInput
+      }
+    })
+    .then(response => {
+      setTextBoxContent(response.data.response);
+    })
+    .catch(error => {
+      console.error('Error sending chat message:', error);
+      setTextBoxContent('Error sending chat message');
+    });
+    e.preventDefault();
+    // Here you can add the logic to send the chat input to your backend
+    console.log("Chat input submitted:", chatInput);
+    // Clear the input after submission
+    setChatInput('');
+  };
+
   return (
-    // Map container, will be assigned to mapRef
-    <div ref={mapRef} style={{ height: '100%', width: '100%' }}>
-      {/* The map will be rendered inside this div */}
+    <div style={{ display: 'flex', height: '100vh' }}>
+      {/* Map container, will be assigned to mapRef */}
+      <div ref={mapRef} style={{ height: '100%', width: '70%' }}>
+        {/* The map will be rendered inside this div */}
+      </div>
+      {/* Text box on the right side */}
+      <div style={{ width: '30%', padding: '20px', overflowY: 'auto' }}>
+        <h2>Stargazer Chatbot</h2>
+        <form onSubmit={handleChatSubmit}>
+          <input
+            type="text"
+            value={chatInput}
+            onChange={(e) => setChatInput(e.target.value)}
+            placeholder="Ask a question..."
+            style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
+          />
+          <button type="submit" style={{ width: '100%', padding: '10px' }}>Send</button>
+        </form>
+        <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', marginTop: '20px' }}>
+          {textBoxContent}
+        </pre>
+      </div>
     </div>
   );
 };
-
 
 export default App;
 
