@@ -37,8 +37,10 @@ def light(latitude, longitude):
 
 WEATHER_API_KEY = os.environ['WEATHER_API_KEY'] # Replace with your OpenWeatherMap API key
 
-def get_weather(latitude, longitude):
-    
+@app.route('/weather', methods=['GET'])
+def get_weather():
+    latitude = float(request.args.get('latitude'))
+    longitude = float(request.args.get('longitude'))
 
     url = f'https://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={WEATHER_API_KEY}&units=metric'
     

@@ -31,3 +31,4 @@ pixel_coordinates = geo_to_pixel(longitude, latitude)
 #return the map value at the pixel coordinates
 
 pixel_value = band_data[pixel_coordinates[1], pixel_coordinates[0]]
+print(pixel_value)
