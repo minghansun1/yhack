@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {createRoot} from 'react-dom/client';
+import axios from 'axios';
 
 import {
   APIProvider,
@@ -69,9 +70,11 @@ const App = () => {
         infoWindow.close();
       
         // Create the content with a button
+        const lat = position.lat;
+        const lng = position.lng;
         const contentString = `
           <div>
-            <p>Pin dropped at: ${position.lat}, ${position.lng}</p>
+            <p>Pin dropped at: ${lat}, ${lng}</p>
             <button id="infoWindowButton">Click Me</button>
           </div>
         `;
@@ -86,6 +89,22 @@ const App = () => {
           if (button) {
             button.addEventListener('click', () => {
               alert('Button clicked!');
+              console.log(lat, lng);
+              axios.get('http://localhost:5000/data', {
+                params: {
+                  latitude: lat,
+                  longitude: lng
+                }
+              })
+                .then(response => {
+                    // Access the response data
+                    const responseData = response.data;
+                    console.log(responseData);
+                    // Process the response data here
+                })
+                .catch(error => {
+                  console.error('Error fetching data:', error);
+                });
             });
           }
         });
@@ -98,7 +117,7 @@ const App = () => {
 
   return (
     // Map container, will be assigned to mapRef
-    <div ref={mapRef} style={{ height: '500px', width: '100%' }}>
+    <div ref={mapRef} style={{ height: '100%', width: '100%' }}>
       {/* The map will be rendered inside this div */}
     </div>
   );
